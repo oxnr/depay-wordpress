@@ -2,15 +2,15 @@
 /*
 Plugin Name: DePay Widget
 Description: Displays DePay Widget for accepting crypto payments on your website.
-Version:     0.0.1
+Version:     0.0.2
 Author:      Kryptohelden
-Author URI:  https://kryptohelden.de/
+Author URI:  https://kryptohelden.de
 Text Domain: depay-widget
 */
 
 defined( 'ABSPATH' ) or die;
 
-define( 'DEPAY_WIDGET_VER', '0.0.1' );
+define( 'DEPAY_WIDGET_VER', '0.0.2' );
 
 if ( ! class_exists( 'Depay_Widget' ) ) {
 	class Depay_Widget {
@@ -47,8 +47,8 @@ if ( ! class_exists( 'Depay_Widget' ) ) {
 
 		public function add_admin_menu() {
 			add_menu_page(
-				__( 'Depay Widget', 'depay-widget' ),
-				__( 'Depay Widget', 'depay-widget' ),
+				__( 'DePay Widget', 'depay-widget' ),
+				__( 'DePay Widget', 'depay-widget' ),
 				'manage_options',
 				'depay-widget',
 				array( $this, 'render_options_page' ),
@@ -74,6 +74,10 @@ if ( ! class_exists( 'Depay_Widget' ) ) {
 			if ( $amount <= 0 )    return __( 'Widget configuration error: Invalid amount value', 'depay-widget' );
 			if ( $token == '' )    return __( 'Widget configuration error: Invalid token value', 'depay-widget' );
 			if ( $receiver == '' ) return __( 'Widget configuration error: Invalid receiver value', 'depay-widget' );
+
+			extract( shortcode_atts( array(
+				'button_label' => __( 'Support Us with DePay', 'depay-widget' )
+			), $atts, $tag ) );
 
 			ob_start();
 			require( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'widget.php' );
